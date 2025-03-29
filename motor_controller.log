@@ -1,0 +1,7 @@
+2025-03-21 22:48:02,736 - motor_control - INFO - GPIO setup completed successfully
+2025-03-21 22:48:02,737 - motor_control - INFO - Motor controller initialized
+2025-03-21 22:48:02,737 - motor_control - INFO - Motor 1 direction set to forward
+2025-03-21 22:48:02,738 - motor_control - INFO - Motor 2 direction set to forward
+2025-03-21 22:48:02,739 - motor_control - INFO - Motor 3 direction set to forward
+2025-03-21 22:48:02,739 - motor_control - INFO - Motor 4 direction set to forward
+2025-03-21 22:56:41,678 - motor_control - INFO - GPIO cleanup completed
