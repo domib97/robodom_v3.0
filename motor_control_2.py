@@ -1,4 +1,3 @@
-# python
 import RPi.GPIO as GPIO
 import time
 import threading
@@ -121,23 +120,34 @@ def motor_control_thread(motor, direction, start_speed, end_speed, step_delay=0.
 
 def forward():
     threads = []
-    for m in range(1, 5):
-        t = threading.Thread(target=motor_control_thread, args=(m, 'forward', 10, MAX_DUTY_CYCLE))
-        threads.append(t)
+    t1 = threading.Thread(target=motor_control_thread, args=(1, 'forward', 10, MAX_DUTY_CYCLE))
+    t2 = threading.Thread(target=motor_control_thread, args=(2, 'backward', 10, MAX_DUTY_CYCLE))
+    t3 = threading.Thread(target=motor_control_thread, args=(3, 'forward', 10, MAX_DUTY_CYCLE))
+    t4 = threading.Thread(target=motor_control_thread, args=(4, 'forward', 10, MAX_DUTY_CYCLE))    
+#for m in range(1, 5):
+#        t = threading.Thread(target=motor_control_thread, args=(m, 'forward', 10, MAX_DUTY_CYCLE))
+    threads.extend([t1, t2, t3, t4])
+    for t in threads:
         t.start()
     for t in threads:
         t.join()
+
 
 def backward():
     threads = []
-    for m in range(1, 5):
-        t = threading.Thread(target=motor_control_thread, args=(m, 'backward', 10, MAX_DUTY_CYCLE))
-        threads.append(t)
+    t1 = threading.Thread(target=motor_control_thread, args=(1, 'backward', 10, MAX_DUTY_CYCLE))
+    t2 = threading.Thread(target=motor_control_thread, args=(2, 'forward', 10, MAX_DUTY_CYCLE))
+    t3 = threading.Thread(target=motor_control_thread, args=(3, 'backward', 10, MAX_DUTY_CYCLE))
+    t4 = threading.Thread(target=motor_control_thread, args=(4, 'backward', 10, MAX_DUTY_CYCLE))    
+
+    threads.extend([t1, t2, t3, t4])
+    for t in threads:
         t.start()
     for t in threads:
         t.join()
 
-def right():
+
+def turn_left():
     threads = []
     # For a right strafe, set motors differently
     t1 = threading.Thread(target=motor_control_thread, args=(1, 'backward', 10, MAX_DUTY_CYCLE))
@@ -150,7 +160,7 @@ def right():
     for t in threads:
         t.join()
 
-def left():
+def turn_right():
     threads = []
     t1 = threading.Thread(target=motor_control_thread, args=(1, 'forward', 10, MAX_DUTY_CYCLE))
     t2 = threading.Thread(target=motor_control_thread, args=(2, 'backward', 10, MAX_DUTY_CYCLE))
@@ -161,6 +171,32 @@ def left():
         t.start()
     for t in threads:
         t.join()
+
+def strafe_right():
+    threads = []
+    # For a right strafe, set motors differently
+    t1 = threading.Thread(target=motor_control_thread, args=(1, 'backward', 10, MAX_DUTY_CYCLE))
+    t2 = threading.Thread(target=motor_control_thread, args=(2, 'forward', 10, MAX_DUTY_CYCLE))
+    t3 = threading.Thread(target=motor_control_thread, args=(3, 'forward', 10, MAX_DUTY_CYCLE))
+    t4 = threading.Thread(target=motor_control_thread, args=(4, 'backward', 10, MAX_DUTY_CYCLE))
+    threads.extend([t1, t2, t3, t4])
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+def strafe_left():
+    threads = []
+    t1 = threading.Thread(target=motor_control_thread, args=(1, 'forward', 10, MAX_DUTY_CYCLE))
+    t2 = threading.Thread(target=motor_control_thread, args=(2, 'forward', 10, MAX_DUTY_CYCLE))
+    t3 = threading.Thread(target=motor_control_thread, args=(3, 'forward', 10, MAX_DUTY_CYCLE))
+    t4 = threading.Thread(target=motor_control_thread, args=(4, 'backward', 10, MAX_DUTY_CYCLE))
+    threads.extend([t1, t2, t3, t4])
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
 
 def forward_right():
     threads = []
@@ -216,12 +252,12 @@ def command_loop():
     cmd_map = {
         '8': forward,
         '2': backward,
-        '4': left,
-        '6': right,
+        '4': strafe_left,
+        '6': strafe_right,
         '7': forward_left,
         '9': forward_right,
-        '1': backward_left,
-        '3': backward_right
+        '1': turn_left,
+        '3': turn_right
     }
     try:
         while True:
