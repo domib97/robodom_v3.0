@@ -1,0 +1,12 @@
+[Unit]
+Description=Homepage-Flask-Webserver
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/home/pi/workspace_head/homepage_flask.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
