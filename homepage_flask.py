@@ -5,11 +5,11 @@ from flask import Flask, render_template_string, request
 
 app = Flask(__name__)
 
-# Ermittel den absoluten Pfad zum Python-Skript
+# Absoluter Pfad zum Python-Skript, das im Manual-Modus gestartet werden soll
 HOME_DIR = os.path.expanduser("~")
 MOTOR_CONTROL_SCRIPT = os.path.join(HOME_DIR, "workspace_head", "motor_control_4.py")
 
-# HTML-Template mit vier Knöpfen
+# HTML-Template mit vier Buttons zur Modusauswahl
 HTML_TEMPLATE = """
 <!doctype html>
 <html lang="de">
@@ -53,5 +53,5 @@ def mode():
     return f"{message} <br><br><a href='/'>Zurück</a>"
 
 if __name__ == "__main__":
-    # Starte den Server auf allen Schnittstellen an Port 8069
+    # Starte den Flask-Webserver auf allen Netzwerkschnittstellen an Port 8069
     app.run(host="0.0.0.0", port=8069)
