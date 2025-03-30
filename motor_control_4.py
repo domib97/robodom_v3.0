@@ -19,10 +19,10 @@ MOTOR_PINS = {
 }
 
 class Motor:
-    def __init__(self, en_pin, in1_pin, in2_pin, reversed=False):
-        self.en_pin = en_pin
-        self.in1_pin = in1_pin
-        self.in2_pin = in2_pin
+    def __init__(self, EN, IN1, IN2, reversed=False):
+        self.en_pin = EN
+        self.in1_pin = IN1
+        self.in2_pin = IN2
         self.reversed = reversed
 
         # Initialisiere die GPIO-Pins
@@ -106,7 +106,7 @@ def live_control(robot):
             # Rechter Stick: Achse 2 (Rotation, hier als horizontale Achse genutzt)
             x = joystick.get_axis(0)
             y = -joystick.get_axis(1)
-            r = joystick.get_axis(2)
+            r = -joystick.get_axis(2)
 
             # Einfache Deadzone-Behandlung
             threshold = 0.1
